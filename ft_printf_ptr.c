@@ -6,7 +6,7 @@
 /*   By: ccascava <ccascava@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/12 11:32:55 by ccascava          #+#    #+#             */
-/*   Updated: 2026/10/12 16:41:57 by ccascava         ###   ########.fr       */
+/*   Updated: 2026/10/12 16:45:11 by ccascava         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,27 +69,6 @@ int	ft_printf_ptr(void *ptr)
 		hexa_count = find_len(hexa);
 		original = hexa_count;
 		assign(str, hexa_count, hexa, original);
-		/**
-		str = malloc(hexa_count + 3);
-		if (!str)
-		{
-			return (0);
-		}
-		str[hexa_count + 2] = '\0';
-		while (hexa_count + 1 > 1)
-		{
-			if (hexa % 16 < 10)
-				str[hexa_count + 1] = hexa % 16 + '0';
-			else
-				str[hexa_count + 1] = hexa % 16 - 10 + 'a';
-			hexa /= 16;
-			hexa_count--;
-		}
-		str[hexa_count + 1] = 'x';
-		str[hexa_count] = '0';
-		write (1, str, original + 2);
-		free(str);
-		**/
 		return (original + 2);
 	}
 }
