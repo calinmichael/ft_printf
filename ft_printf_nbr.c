@@ -27,7 +27,6 @@ void	assign_str(char *str, int len, long num)
 		len++;
 	}
 	free(str);
-
 }
 
 int	update_count(int len, int flag, long num, int count)

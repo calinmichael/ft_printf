@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int	tha_switch(va_list lst, char conv, int count)
+int	c_s_p(va_list lst, char conv, int count)
 {
 	char	ch;
 	char	*str;
@@ -41,10 +41,10 @@ int	tha_switch(va_list lst, char conv, int count)
 	return (count);
 }
 
-int	p2_switch(va_list lst, char conv, int count)
+int	di_u_x(va_list lst, char conv, int count)
 {
 	int				decimal;
-	/**unsigned int	num;**/
+	unsigned int	num;
 
 	if (conv == 'd' || conv == 'i')
 	{
@@ -53,13 +53,18 @@ int	p2_switch(va_list lst, char conv, int count)
 	}
 	else if (conv == 'u')
 	{
-		/**num = va_arg(lst, unsigned int);
-		count += ft_printf_unsigned(num);**/
+		num = va_arg(lst, unsigned int);
+		count += ft_printf_unsigned(num);
+	}
+	else if (conv == 'x' || conv == 'X')
+	{
+		num = va_arg(lst, unsigned int);
+		count += ft_printf_hex(num, conv);
 	}
 	return (count);
 }
 
-int	tha_while(va_list lst, int count, const char *a, int i)
+int	the_filter(va_list lst, int count, const char *a, int i)
 {
 	char	conv;
 
@@ -72,11 +77,11 @@ int	tha_while(va_list lst, int count, const char *a, int i)
 			i++;
 			conv = a[i];
 			if (conv == '%')
-				count = tha_switch(lst, conv, count);
+				count = c_s_p(lst, conv, count);
 			else if (conv == 'c' || conv == 's' || conv == 'p')
-				count = tha_switch(lst, conv, count);
+				count = c_s_p(lst, conv, count);
 			else
-				count = p2_switch(lst, conv, count);
+				count = di_u_x(lst, conv, count);
 		}
 		else
 		{
@@ -99,7 +104,84 @@ int	ft_printf(const char *a, ...)
 	va_start(lst, a);
 	count = 0;
 	i = 0;
-	count = tha_while(lst, count, a, i);
+	count = the_filter(lst, count, a, i);
 	va_end(lst);
 	return (count);
 }
+
+
+
+#include <stdio.h>
+#include "ft_printf.h"
+
+int	main(void)
+{
+	int	real;
+	int	mine;
+
+	printf("===== %%c =====\n");
+	real = printf("Real: [%c]\n", 'A');
+	mine = ft_printf("Mine: [%c]\n", 'A');
+	printf("Return: real=%d mine=%d\n\n", real, mine);
+
+	printf("===== %%s =====\n");
+	real = printf("Real: [%s]\n", "Hello, world!");
+	mine = ft_printf("Mine: [%s]\n", "Hello, world!");
+	printf("Return: real=%d mine=%d\n\n", real, mine);
+
+	printf("===== %%p =====\n");
+	real = printf("Real: [%p]\n", (void *)0);
+	mine = ft_printf("Mine: [%p]\n", (void *)0);
+	printf("Return: real=%d mine=%d\n\n", real, mine);
+
+	printf("===== %%d =====\n");
+	real = printf("Real: [%d]\n", -42);
+	mine = ft_printf("Mine: [%d]\n", -42);
+	printf("Return: real=%d mine=%d\n\n", real, mine);
+
+	printf("===== %%i =====\n");
+	real = printf("Real: [%i]\n", 2147483647);
+	mine = ft_printf("Mine: [%i]\n", 2147483647);
+	printf("Return: real=%d mine=%d\n\n", real, mine);
+
+	printf("===== %%u =====\n");
+	real = printf("Real: [%u]\n", (unsigned int)-1);
+	mine = ft_printf("Mine: [%u]\n", (unsigned int)-1);
+	printf("Return: real=%d mine=%d\n\n", real, mine);
+
+	printf("===== %%x =====\n");
+	real = printf("Real: [%x]\n", 255u);
+	mine = ft_printf("Mine: [%x]\n", 255u);
+	printf("Return: real=%d mine=%d\n\n", real, mine);
+
+	printf("===== %%X =====\n");
+	real = printf("Real: [%X]\n", 255u);
+	mine = ft_printf("Mine: [%X]\n", 255u);
+	printf("Return: real=%d mine=%d\n\n", real, mine);
+
+	printf("===== %%%% =====\n");
+	real = printf("Real: [%%]\n");
+	mine = ft_printf("Mine: [%%]\n");
+	printf("Return: real=%d mine=%d\n\n", real, mine);
+
+	printf("===== ZERO TESTS =====\n");
+	real = printf("Real: [%d]\n", 0);
+	mine = ft_printf("Mine: [%d]\n", 0);
+	printf("Return: real=%d mine=%d\n\n", real, mine);
+
+	real = printf("Real: [%u]\n", 0u);
+	mine = ft_printf("Mine: [%u]\n", 0u);
+	printf("Return: real=%d mine=%d\n\n", real, mine);
+
+	real = printf("Real: [%x]\n", 0u);
+	mine = ft_printf("Mine: [%x]\n", 0u);
+	printf("Return: real=%d mine=%d\n\n", real, mine);
+
+	printf("===== NO CONVERSION =====\n");
+	real = printf("Real: Hello!\n");
+	mine = ft_printf("Mine: Hello!\n");
+	printf("Return: real=%d mine=%d\n", real, mine);
+
+	return (0);
+}
+

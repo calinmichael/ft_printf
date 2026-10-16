@@ -12,6 +12,7 @@ srcs = ft_printf.c \
 	   ft_printf_ptr.c \
 	   ft_printf_nbr.c \
 	   ft_printf_unsigned.c \
+	   ft_printf_hex.c 
 
 objs = $(srcs:.c=.o)
 
