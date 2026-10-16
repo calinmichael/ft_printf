@@ -12,6 +12,29 @@
 
 #include "ft_printf.h"
 
+void    pls_print(char *str, int len)
+{
+    while (str[len])
+    {
+        write (1, &str[len], 1);
+        len++;
+    }
+    free (str);
+}
+
+void    create(char *str, unsigned int num, int len)
+{
+    str[len] = '\0';
+    len--;
+    while (len >= 0)
+    {
+        str[len] = num % 10 + '0';
+        num /= 10;
+        len--;
+    }
+    pls_print(str, 0);
+}
+
 int ft_printf_unsigned(unsigned int n)
 {
     unsigned int    num;
@@ -39,20 +62,6 @@ int ft_printf_unsigned(unsigned int n)
     {
         return (0);
     }
-    str[len] = '\0';
-    len--;
-    while (len >= 0)
-    {
-        str[len] = num % 10 + '0';
-        num /= 10;
-        len--;
-    }
-    len = 0;
-    while (str[len])
-    {
-        write (1, &str[len], 1);
-        len++;
-    }
-    free (str);
+    create(str, num, len);
     return (count);
 }
