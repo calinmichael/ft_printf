@@ -22,7 +22,7 @@ void    pls_print(char *str, int len)
     free (str);
 }
 
-void    create(char *str, unsigned int num, int len)
+int create(char *str, unsigned int num, int len, int count)
 {
     str[len] = '\0';
     len--;
@@ -33,6 +33,7 @@ void    create(char *str, unsigned int num, int len)
         len--;
     }
     pls_print(str, 0);
+    return (count);
 }
 
 int ft_printf_unsigned(unsigned int n)
@@ -62,6 +63,5 @@ int ft_printf_unsigned(unsigned int n)
     {
         return (0);
     }
-    create(str, num, len);
-    return (count);
+    return (create(str, num, len, count));
 }

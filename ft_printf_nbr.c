@@ -51,6 +51,15 @@ int	update_count(int len, int flag, long num, int count)
 	return (count);
 }
 
+int	is_n_negative(long num)
+{
+	if (num < 0)
+	{
+		return (-1);
+	}
+	return (1);
+}
+
 int	ft_printf_nbr(int n)
 {
 	long	num;
@@ -63,10 +72,8 @@ int	ft_printf_nbr(int n)
 	count = 0;
 	flag = 0;
 	if (num < 0)
-	{
-		num *= -1;
 		flag = 1;
-	}
+	num *= is_n_negative(num);
 	while (num > 0)
 	{
 		num /= 10;

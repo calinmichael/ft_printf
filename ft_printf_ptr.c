@@ -59,8 +59,8 @@ int	ft_printf_ptr(void *ptr)
 
 	if (!ptr)
 	{
-		write (1, "0x0", 3);
-		return (3);
+		write (1, "(nil)", 5);
+		return (5);
 	}
 	else
 	{
